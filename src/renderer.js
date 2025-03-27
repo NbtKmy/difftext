@@ -56,12 +56,14 @@ document.getElementById('selectBtn').addEventListener('click', async () => {
 
   container.innerHTML = '';
   diffView.innerHTML = '';
-
-  files.forEach(file => {
-    const section = document.createElement('div');
-    section.innerHTML = `<h3>${file.name}</h3><pre>${file.content}</pre>`;
-    container.appendChild(section);
-  });
+  // ファイルが一つしか選択されていない場合は、その内容を表示
+  if (files.length === 1) {
+    files.forEach(file => {
+        const section = document.createElement('div');
+        section.innerHTML = `<h3>${file.name}</h3><pre>${file.content}</pre>`;
+        container.appendChild(section);
+    });
+  }
 
   if (files.length === 2) {
     // オリジナル文書選択用UI
@@ -86,23 +88,7 @@ document.getElementById('selectBtn').addEventListener('click', async () => {
   }
 });
 
-const allDiffBlocks = document.querySelectorAll('.diff-block');
-allDiffBlocks.forEach(el => {
-  el.addEventListener('mouseenter', () => {
-    const id = el.dataset.diffId;
-    document.querySelectorAll(`[data-diff-id="${id}"]`).forEach(match => {
-      match.classList.add('highlight');
-    });
-  });
-
-  el.addEventListener('mouseleave', () => {
-    const id = el.dataset.diffId;
-    document.querySelectorAll(`[data-diff-id="${id}"]`).forEach(match => {
-      match.classList.remove('highlight');
-    });
-  });
-});
-
+// ファイル名を取得
 const getWitLabel = (filename) =>
     filename.replace(/\.[^/.]+$/, '').replace(/\s+/g, '_');
 
@@ -115,8 +101,8 @@ document.getElementById('exportTeiBtn').addEventListener('click', async () => {
 
     const leftFile = files[baseIndex];
     const rightFile = files[1 - baseIndex];
-    const label1 = getWitLabel(leftFile.name); // 例: FILE1
-    const label2 = getWitLabel(rightFile.name); // 例: FILE2
+    const label1 = getWitLabel(leftFile.name);
+    const label2 = getWitLabel(rightFile.name);
   
     const teiContent = getDiffTeiVariantXml(leftFile.content, rightFile.content, label1, label2);
     const fullTei = `<?xml version="1.0" encoding="utf-8"?>
@@ -178,7 +164,7 @@ document.getElementById('exportTeiBtn').addEventListener('click', async () => {
             <style>
             body { font-family: sans-serif; }
             .diff-block.insert { background-color: lightgreen; }
-            .diff-block.delete { background-color: pink; text-decoration: line-through; }
+            .diff-block.delete { background-color: pink; }
             .diff-block.placeholder { color: transparent; }
             .diff-block.highlight { outline: 2px solid gold; }
             .container { display: flex; gap: 20px; }
@@ -205,4 +191,3 @@ document.getElementById('exportTeiBtn').addEventListener('click', async () => {
   
     URL.revokeObjectURL(url);
   });
-  

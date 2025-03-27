@@ -1,0 +1,32 @@
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+    Arial, sans-serif;
+  margin: auto;
+  max-width: 38rem;
+  padding: 2rem;
+}
+
+#diffView h4 {
+  margin-bottom: 0.5em;
+}
+#diffView div {
+  font-family: monospace;
+}
+
+.diff-block.insert {
+  background-color: lightgreen;
+}
+
+.diff-block.delete {
+  background-color: pink;
+}
+
+.diff-block.placeholder {
+  background-color: transparent;
+  color: transparent;
+}
+
+/* マウス乗った時の共通ハイライト */
+.diff-block.highlight {
+  outline: 2px solid gold;
+}

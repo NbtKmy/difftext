@@ -8,10 +8,10 @@ function createWindow() {
     width: 1000,
     height: 800,
     webPreferences: {
-      //preload: path.join(__dirname, 'preload.js'),
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
-      contextIsolation: true,  // 念のため有効にしておく
-      nodeIntegration: false
+      contextIsolation: true,
+      nodeIntegration: false,
+      devTools: false
     },
   });
 

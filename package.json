@@ -1,8 +1,8 @@
 {
   "name": "diff-viewer",
-  "productName": "diff-viewer",
+  "productName": "DiffTei",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "テキストの差分を可視化して、HTMLやTEI/XML形式で保存します",
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",

@@ -16,6 +16,11 @@
     "name": "Nobutake Kamiya",
     "email": "nobuta77to99@hotmail.com"
   },
+  "build": {
+    "win": {
+    "target": "squirrel"
+    }
+  },
   "license": "MIT",
   "devDependencies": {
     "@electron-forge/cli": "^7.8.0",

@@ -3,6 +3,7 @@ header {
   background-size: cover;
   height: 120px;
 }
+
 .title {
   color: white;
   font-weight: bold;
@@ -17,6 +18,23 @@ body {
   max-width: 38rem;
   padding: 2rem;
 }
+
+button {
+  padding: 8px 16px;
+  margin: 6px;
+  border: none;
+  background-color: #1976d2;
+  color: white;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+button:hover {
+  background-color: #1565c0;
+}
+
 
 #diffView h4 {
   margin-bottom: 0.5em;
@@ -41,4 +59,11 @@ body {
 /* マウス乗った時の共通ハイライト */
 .diff-block.highlight {
   outline: 2px solid gold;
+}
+
+/* エディタのスタイル */
+#editor {
+  height: calc(100vh - 60px);
+  width: 100%;
+  border: 1px solid #ccc;
 }

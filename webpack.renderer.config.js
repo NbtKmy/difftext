@@ -1,4 +1,6 @@
+const webpack = require('webpack');
 const rules = require('./webpack.rules');
+const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
 rules.push({
   test: /\.css$/,
@@ -10,4 +12,21 @@ module.exports = {
   module: {
     rules,
   },
+  plugins: [
+    new MonacoWebpackPlugin({
+      languages: ['xml'],
+    }),
+    new webpack.IgnorePlugin({
+      resourceRegExp: /^vs\/editor\/common\/services\/editorSimpleWorker$/,
+    }),
+  ],
+  output: {
+    globalObject: 'self',
+    publicPath: './',
+  },
+  ignoreWarnings: [
+    {
+      module: /editorSimpleWorker\.js$/,
+    },
+  ],
 };

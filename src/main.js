@@ -14,9 +14,43 @@ function createWindow() {
       devTools: false
     },
   });
-
   win.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 }
+
+function createTeiEditorWindow(filePath, xmlContent) {
+  const editorWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+    title: 'TEIエディタ',
+    webPreferences: {
+      preload: EDITOR_WINDOW_PRELOAD_WEBPACK_ENTRY,
+      contextIsolation: true,
+      nodeIntegration: false,
+      //devTools: false
+    },
+  });
+  editorWindow.loadURL(EDITOR_WINDOW_WEBPACK_ENTRY);
+  editorWindow.webContents.once('did-finish-load', () => {
+    editorWindow.webContents.send('load-tei-xml', { filePath, xmlContent });
+  });
+}
+
+ipcMain.handle('select-xml-file', async () => {
+  const result = await dialog.showOpenDialog({
+    filters: [{ name: 'XML Files', extensions: ['xml'] }],
+    properties: ['openFile'],
+  });
+
+  if (result.canceled || result.filePaths.length === 0) return null;
+
+  const filePath = result.filePaths[0];
+  const content = fs.readFileSync(filePath, 'utf-8');
+
+  // 新しいウィンドウで開く
+  createTeiEditorWindow(filePath, content);
+
+  return true;
+});
 
 app.whenReady().then(createWindow);
 

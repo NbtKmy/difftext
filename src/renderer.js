@@ -6,6 +6,7 @@ const { getDiffTeiVariantXml, getSideBySideDiff } = require('./diffUtils');
 let files = [];
 let baseIndex = 0;
 
+
 // 連動ハイライト
 function setupDiffHighlighting() {
     const allDiffBlocks = document.querySelectorAll('.diff-block');
@@ -92,7 +93,7 @@ document.getElementById('selectBtn').addEventListener('click', async () => {
 const getWitLabel = (filename) =>
     filename.replace(/\.[^/.]+$/, '').replace(/\s+/g, '_');
 
-// TEIダウンロード
+// TEIエクスポート
 document.getElementById('exportTeiBtn').addEventListener('click', async () => {
     if (files.length !== 2) {
       alert('TEIエクスポートは2ファイル選択時のみ可能です。');
@@ -191,3 +192,21 @@ document.getElementById('exportTeiBtn').addEventListener('click', async () => {
   
     URL.revokeObjectURL(url);
   });
+
+// TEIエディタを開く
+/* function openTeiEditor(initialXmlText) {
+  document.getElementById('teiEditorContainer').style.display = 'block';
+  monacoEditor = monaco.editor.create(document.getElementById('editor'), {
+    value: initialXmlText,
+    language: 'xml',
+    theme: 'vs-light',
+    automaticLayout: true,
+  });
+}
+*/
+
+document.getElementById('openEditorBtn').addEventListener('click', async() => {
+  await window.electronAPI.selectXmlFile();
+});
+
+

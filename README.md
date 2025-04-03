@@ -8,6 +8,8 @@ Pythonだと[中村さん](https://github.com/nakamura196)がすでに[koui](htt
 
 - [diff-match-patch](https://github.com/google/diff-match-patch)
 - [mammoth](https://www.npmjs.com/package/mammoth)
+- [monaco-editor](https://github.com/microsoft/monaco-editor)
+- [vkbeautify](https://github.com/aabluedragon/vkbeautify/tree/master)
 
 ## 使い方
 
@@ -19,6 +21,8 @@ Pythonだと[中村さん](https://github.com/nakamura196)がすでに[koui](htt
 という感じで使えます。
 HTMLファイルはブラウザで開けます。
 TEIファイルは、[TEI Critical Apparatus Toolbox](http://teicat.huma-num.fr/witnesses.php)にアップロードして開く、などなどできます。
+
+v1.1.0からエディタもつけました。TEIファイルを作成してから、エディタでさらに情報を追加できます。
 
 ## アプリを自分で改良したい人は…
 

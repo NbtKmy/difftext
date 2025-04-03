@@ -45,7 +45,7 @@ module.exports = {
             {
               html: './src/index.html',
               js: './src/renderer.js',
-              name: 'main_window',
+              name: 'main',
               preload: {
                 js: './src/preload.js',
               },
@@ -53,7 +53,7 @@ module.exports = {
             {
               html: './src/editor.html',
               js: './src/editorRenderer.js',
-              name: 'editor_window',
+              name: 'editor',
               preload: {
                 js: './src/editorPreload.js',
               },

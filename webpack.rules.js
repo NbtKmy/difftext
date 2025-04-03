@@ -16,6 +16,20 @@ module.exports = [
       },
     },
   },
+  {
+    test: /\.(png|jpe?g|gif|ico)$/i,
+    type: 'asset/resource',
+    generator: {
+      filename: ({ filename }) => {
+        // エントリポイント名を推測して出力先を切り替える
+        if (filename.includes('editorRenderer')) {
+          return 'editor/assets/[name][ext]';
+        } else {
+          return 'main/assets/[name][ext]';
+        }
+      }
+    }
+  },
   // Put your webpack loader rules in this array.  This is where you would put
   // your ts-loader configuration for instance:
   /**

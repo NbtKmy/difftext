@@ -65,30 +65,6 @@ function escapeXML(str) {
   
     return output;
   }
-/*
-  function getSideBySideDiff(text1, text2) {
-    const diffs = dmp.diff_main(text1, text2);
-    dmp.diff_cleanupSemantic(diffs);
-  
-    let left = '';
-    let right = '';
-  
-    diffs.forEach(([op, data]) => {
-      const escaped = escapeHTML(data);
-      if (op === DiffMatchPatch.DIFF_EQUAL) {
-        left += escaped;
-        right += escaped;
-      } else if (op === DiffMatchPatch.DIFF_DELETE) {
-        left += `<span style="background-color: pink;">${escaped}</span>`;
-      } else if (op === DiffMatchPatch.DIFF_INSERT) {
-        right += `<span style="background-color: lightgreen;">${escaped}</span>`;
-      }
-    });
-  
-    return { left, right };
-  }
-*/
-
 
 function getSideBySideDiff(text1, text2) {
     const diffs = dmp.diff_main(text1, text2);
@@ -121,6 +97,38 @@ function getSideBySideDiff(text1, text2) {
   
     return { left, right };
   }
+
+  export function getMultiDiffTeiData(baseText, fileList) {
+    const dmp = new DiffMatchPatch();
+  
+    const results = [];
+  
+    fileList.forEach((file) => {
+      const diffs = dmp.diff_main(baseText, file.content);
+      dmp.diff_cleanupSemantic(diffs);
+  
+      diffs.forEach(([op, data], i) => {
+        if (op === 1) {
+          const prev = diffs[i - 1];
+          const lem = (prev && prev[0] === 0) ? prev[1] : '';
+          const rdg = data;
+  
+          const existing = results.find(d => d.lem === lem);
+          if (existing) {
+            existing.rdgs.push({ wit: `#${file.name}`, text: rdg });
+          } else {
+            results.push({
+              id: `diff${results.length + 1}`,
+              lem,
+              rdgs: [{ wit: `#${file.name}`, text: rdg }],
+            });
+          }
+        }
+      });
+    });
+  
+    return results;
+  }
   
 
-module.exports = { getDiffTeiVariantXml, getSideBySideDiff };
+module.exports = { getDiffTeiVariantXml, getSideBySideDiff, getMultiDiffTeiData };

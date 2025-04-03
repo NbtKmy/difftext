@@ -5,6 +5,7 @@ const { getDiffTeiVariantXml, getSideBySideDiff } = require('./diffUtils');
 // グローバル変数
 let files = [];
 let baseIndex = 0;
+let currentDiffData = null;
 
 
 // 連動ハイライト
@@ -94,6 +95,24 @@ const getWitLabel = (filename) =>
     filename.replace(/\.[^/.]+$/, '').replace(/\s+/g, '_');
 
 // TEIエクスポート
+function teiFromMultiDiffData(diffData) {
+  return diffData.map(d => {
+    const rdgs = d.rdgs.map(r => `<rdg wit="${r.wit}">${r.text}</rdg>`).join('');
+    return `<app xml:id="${d.id}"><lem>${d.lem}</lem>${rdgs}</app>`;
+  }).join('\n');
+}
+
+
+document.getElementById('exportTeiBtn').addEventListener('click', async () => {
+  if (files.length !== 2) {
+    alert('TEIエクスポートは2ファイル選択時のみ可能です。');
+    return;
+  }
+  
+});
+
+
+/*
 document.getElementById('exportTeiBtn').addEventListener('click', async () => {
     if (files.length !== 2) {
       alert('TEIエクスポートは2ファイル選択時のみ可能です。');
@@ -143,7 +162,7 @@ document.getElementById('exportTeiBtn').addEventListener('click', async () => {
   
     URL.revokeObjectURL(url);
   });
-
+*/
 
 // HTMLダウンロード
   document.getElementById('exportHtmlBtn').addEventListener('click', () => {
@@ -193,17 +212,7 @@ document.getElementById('exportTeiBtn').addEventListener('click', async () => {
     URL.revokeObjectURL(url);
   });
 
-// TEIエディタを開く
-/* function openTeiEditor(initialXmlText) {
-  document.getElementById('teiEditorContainer').style.display = 'block';
-  monacoEditor = monaco.editor.create(document.getElementById('editor'), {
-    value: initialXmlText,
-    language: 'xml',
-    theme: 'vs-light',
-    automaticLayout: true,
-  });
-}
-*/
+
 
 document.getElementById('openEditorBtn').addEventListener('click', async() => {
   await window.electronAPI.selectXmlFile();

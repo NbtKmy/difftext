@@ -8,13 +8,13 @@ function createWindow() {
     width: 1000,
     height: 800,
     webPreferences: {
-      preload: MAIN_PRELOAD_WEBPACK_ENTRY,
+      preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
       nodeIntegration: false,
       //devTools: false
     },
   });
-  win.loadURL(MAIN_WEBPACK_ENTRY);
+  win.loadFile(path.join(__dirname, '../dist/index.html'));
 }
 
 function createTeiEditorWindow(filePath, xmlContent) {
@@ -23,13 +23,13 @@ function createTeiEditorWindow(filePath, xmlContent) {
     height: 600,
     title: 'TEIエディタ',
     webPreferences: {
-      preload: EDITOR_PRELOAD_WEBPACK_ENTRY,
+      preload: path.join(__dirname, 'editorPreload.js'),
       contextIsolation: true,
       nodeIntegration: false,
       //devTools: false
     },
   });
-  editorWindow.loadURL(EDITOR_WEBPACK_ENTRY);
+  editorWindow.loadFile(path.join(__dirname, '../dist/editor.html'));
   editorWindow.webContents.once('did-finish-load', () => {
     editorWindow.webContents.send('load-tei-xml', { filePath, xmlContent });
   });

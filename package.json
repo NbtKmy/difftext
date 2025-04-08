@@ -19,7 +19,7 @@
     "email": "nobuta77to99@hotmail.com"
   },
   "build": {
-    "appId": "com.yourname.difftei",
+    "appId": "com.nbtkmy.difftei",
     "productName": "DiffTei",
     "files": [
       "dist/**/*",
@@ -33,7 +33,10 @@
     },
     "mac": {
       "target": "dmg",
-      "identity": null
+      "hardenedRuntime": true,
+      "entitlements": "entitlements.mac.plist",
+      "entitlementsInherit": "entitlements.mac.plist",
+      "gatekeeperAssess": false
     },
     "win": {
       "target": "nsis"

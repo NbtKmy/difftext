@@ -4,7 +4,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
 module.exports = {
-  mode: 'development', // or 'production'
+  mode: 'production', // development or 'production'
   entry: {
     main: './src/renderer.js',
     editor: './src/editorRenderer.js',
